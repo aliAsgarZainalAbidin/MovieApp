@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //Fullscreen
     private void fullScreen(){
         View view = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
