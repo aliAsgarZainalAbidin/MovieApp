@@ -1,0 +1,14 @@
+Gunakan endpoint berikut untuk mendapatkan data Movies:
+https://api.themoviedb.org/3/discover/movie?api_key={API KEY}&language=en-US
+
+Gunakan endpoint berikut untuk mendapatkan data Tv Show:
+https://api.themoviedb.org/3/discover/tv?api_key={API KEY}&language=en-US
+
+Gunakan url berikut untuk mendapatkan poster film.
+https://image.tmdb.org/t/p/{POSTER SIZE}/{POSTER FILENAME}
+
+POSTER SIZE di atas adalah ukuran dari poster yang ingin didapatkan. Tersedia beberapa ukuran yang dapat digunakan
+w92, w154, w185, w342, w500, w780, dan original. Sedangkan POSTER FILENAME adalah path poster yang bisa didapatkan
+dari response JSON dengan key poster_path.
+Contoh:
+https://image.tmdb.org/t/p/w185/kSBXou5Ac7vEqKd97wotJumyJvU.jpg
