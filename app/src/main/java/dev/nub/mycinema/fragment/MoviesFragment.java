@@ -31,6 +31,8 @@ public class MoviesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private View viewUpcoming;
+    private View viewNews;
     private ArrayList<MovieModel> listMovies = new ArrayList<>();
 
     public MoviesFragment() {
@@ -44,6 +46,8 @@ public class MoviesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
 
         progressBar = view.findViewById(R.id.progressBar);
+        viewUpcoming = view.findViewById(R.id.view);
+        viewNews = view.findViewById(R.id.view2);
         recyclerView = view.findViewById(R.id.rvMovies);
         MainViewViewModel MVVM = ViewModelProviders.of(this).get(MainViewViewModel.class);
         MVVM.setListMovie();
@@ -51,11 +55,7 @@ public class MoviesFragment extends Fragment {
 
         return view;
     }
-
-    private void setupMovie(){
-
-    }
-
+    
     private Observer<ArrayList<MovieModel>> getMovie = new Observer<ArrayList<MovieModel>>() {
         @Override
         public void onChanged(ArrayList<MovieModel> movieModels) {
@@ -70,8 +70,12 @@ public class MoviesFragment extends Fragment {
     private void showLoading(boolean condition){
         if (condition){
             progressBar.setVisibility(View.VISIBLE);
+            viewNews.setVisibility(View.GONE);
+            viewUpcoming.setVisibility(View.GONE);
         } else {
             progressBar.setVisibility(View.GONE);
+            viewNews.setVisibility(View.VISIBLE);
+            viewUpcoming.setVisibility(View.VISIBLE);
         }
     }
 
