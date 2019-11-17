@@ -1,5 +1,7 @@
 package dev.nub.mycinema.model;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,6 +20,7 @@ import cz.msebera.android.httpclient.Header;
 import static dev.nub.mycinema.BuildConfig.API_KEY;
 
 public class MainViewViewModel extends ViewModel {
+    public static final String TAG = "dev.nub.mycinema.";
     private MutableLiveData<ArrayList<MovieModel>> listMovie = new MutableLiveData<>();
 
     public void setListMovie(){
@@ -36,6 +39,7 @@ public class MainViewViewModel extends ViewModel {
                         JSONObject jsonMovie = jsonArray.getJSONObject(i);
                         MovieModel movieModel = new MovieModel(jsonMovie);
                         movie.add(movieModel);
+                        Log.d(TAG, "MainViewModel onSuccess: "+ movieModel.getTitle());
                     }
 
                     listMovie.postValue(movie);
@@ -54,4 +58,5 @@ public class MainViewViewModel extends ViewModel {
     public LiveData<ArrayList<MovieModel>> getListMovie(){
         return listMovie;
     }
+
 }

@@ -21,22 +21,22 @@ import dev.nub.mycinema.model.MovieModel;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
-    private ArrayList<MovieModel> listFavorite = new ArrayList<>();
+    private ArrayList<MovieModel> listMovies = new ArrayList<>();
     private Context context;
 
     public MovieAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<MovieModel> getListFavorite() {
-        return listFavorite;
+    public ArrayList<MovieModel> getListMovies() {
+        return listMovies;
     }
 
-    public void setListFavorite(ArrayList<MovieModel> listFavorite) {
-        if (listFavorite.size() > 0 ){
-            this.listFavorite.clear();
+    public void setListMovies(ArrayList<MovieModel> listMovies) {
+        if (listMovies.size() > 0 ){
+            this.listMovies.clear();
         }
-        this.listFavorite = listFavorite;
+        this.listMovies= listMovies;
     }
 
     @NonNull
@@ -48,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MovieModel movieModel = listFavorite.get(position);
+        MovieModel movieModel = listMovies.get(position);
 
         holder.tvTitle.setText(movieModel.getTitle());
         Glide.with(holder.itemView.getContext())
@@ -58,7 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return listFavorite.size();
+        return listMovies.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
