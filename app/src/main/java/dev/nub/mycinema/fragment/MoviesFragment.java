@@ -48,7 +48,6 @@ public class MoviesFragment extends Fragment {
         MainViewViewModel MVVM = ViewModelProviders.of(this).get(MainViewViewModel.class);
         MVVM.setListMovie();
         MVVM.getListMovie().observe(this,getMovie);
-        setupRecyclerView();
 
         return view;
     }
@@ -63,12 +62,17 @@ public class MoviesFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             MovieAdapter movieAdapter = new MovieAdapter(getContext());
             movieAdapter.setListMovies(movieModels);
+            showLoading(false);
             recyclerView.setAdapter(movieAdapter);
         }
     };
 
-    private void showLoading(){
-
+    private void showLoading(boolean condition){
+        if (condition){
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     public void setupRecyclerView(){
