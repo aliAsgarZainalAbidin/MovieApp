@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
 import dev.nub.mycinema.R;
 import dev.nub.mycinema.adapter.MovieAdapter;
+import dev.nub.mycinema.adapter.UpcomingMovieAdapter;
 import dev.nub.mycinema.model.MainViewViewModel;
 import dev.nub.mycinema.model.MovieModel;
 
@@ -30,6 +32,7 @@ public class MoviesFragment extends Fragment {
 
 
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewUpcoming;
     private ProgressBar progressBar;
     private View viewUpcoming;
     private View viewNews;
@@ -49,9 +52,13 @@ public class MoviesFragment extends Fragment {
         viewUpcoming = view.findViewById(R.id.view);
         viewNews = view.findViewById(R.id.view2);
         recyclerView = view.findViewById(R.id.rvMovies);
+        recyclerViewUpcoming = view.findViewById(R.id.rv_upcoming);
+
         MainViewViewModel MVVM = ViewModelProviders.of(this).get(MainViewViewModel.class);
+        MVVM.setListUpcomingMovie();
         MVVM.setListMovie();
         MVVM.getListMovie().observe(this,getMovie);
+        MVVM.getListUpcomingMovie().observe(this, getUpcomingMovie);
 
         return view;
     }
@@ -64,6 +71,17 @@ public class MoviesFragment extends Fragment {
             movieAdapter.setListMovies(movieModels);
             showLoading(false);
             recyclerView.setAdapter(movieAdapter);
+        }
+    };
+
+    private Observer<ArrayList<MovieModel>> getUpcomingMovie = new Observer<ArrayList<MovieModel>>() {
+        @Override
+        public void onChanged(ArrayList<MovieModel> movieModels) {
+            recyclerViewUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            UpcomingMovieAdapter movieAdapter = new UpcomingMovieAdapter(getContext());
+            movieAdapter.setListUpcomingMovie(movieModels);
+            showLoading(false);
+            recyclerViewUpcoming.setAdapter(movieAdapter);
         }
     };
 

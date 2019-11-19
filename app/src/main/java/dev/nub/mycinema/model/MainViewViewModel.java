@@ -22,6 +22,43 @@ import static dev.nub.mycinema.BuildConfig.API_KEY;
 public class MainViewViewModel extends ViewModel {
     public static final String TAG = "dev.nub.mycinema.";
     private MutableLiveData<ArrayList<MovieModel>> listMovie = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<MovieModel>> listUpcomingMovie = new MutableLiveData<>();
+
+    public LiveData<ArrayList<MovieModel>> getListUpcomingMovie() {
+        return listUpcomingMovie;
+    }
+
+    public void setListUpcomingMovie() {
+       AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+       final ArrayList<MovieModel> movie = new ArrayList<>();
+       String url = "https://api.themoviedb.org/3/movie/upcoming?api_key="+API_KEY+"&language=en-US&page=1";
+       asyncHttpClient.get(url, new AsyncHttpResponseHandler() {
+           @Override
+           public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+               String result = new String(responseBody);
+               try {
+                   JSONObject jsonObject = new JSONObject(result);
+                   JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+                   for (int i=0; i<jsonArray.length(); i++){
+                       JSONObject jsonMovie = jsonArray.getJSONObject(i);
+                       MovieModel movieModel = new MovieModel(jsonMovie);
+                       movie.add(movieModel);
+                   }
+
+                   listUpcomingMovie.postValue(movie);
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+           }
+
+           @Override
+           public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+           }
+       });
+    }
+
 
     public void setListMovie(){
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
